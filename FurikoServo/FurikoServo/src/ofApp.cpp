@@ -1,7 +1,11 @@
 #include "ofApp.h"
-
+#include "MaestroSerial.h"
+#include <stdio.h>
+#include <windows.h>
 //--------------------------------------------------------------
 void ofApp::setup() {
+
+	
 
 	ofBackground(0, 0, 0);
 	ofSetFrameRate(30);
@@ -34,6 +38,48 @@ void ofApp::update(){
 		{
 			Furikos[i].caltheta(ofGetElapsedTimeMillis());
 		}
+
+
+
+
+		HANDLE port;
+		char * portName;
+		int baudRate;
+		BOOL success;
+		unsigned short target, position;
+
+		/* portName should be the name of the Maestro's Command Port (e.g. "COM4")
+		* as shown in your computer's Device Manager.
+		* Alternatively you can use \\.\USBSER000 to specify the first virtual COM
+		* port that uses the usbser.sys driver.  This will usually be the Maestro's
+		* command port. */
+		portName = "COM4";  // Each double slash in this source code represents one slash in the actual name.
+
+							/* Choose the baud rate (bits per second).
+							* If the Maestro's serial mode is USB Dual Port, this number does not matter. */
+		baudRate = 9600;
+
+		/* Open the Maestro's serial port. */
+		port = maestro.openPort(portName, baudRate);
+		//if (port == INVALID_HANDLE_VALUE) { return -1; }
+
+		/* Get the current position of channel 0. */
+		success = maestro.maestroGetPosition(port, 0, &position);
+		//if (!success) { return -1; }
+		//printf("Current position is %d.\n", position);
+
+		/* Choose a new target based on the current position. */
+		target = (position < 6000) ? 7000 : 5000;
+		//printf("Setting target to %d (%d us).\n", target, target / 4);
+
+		/* Set the target of channel 0. */
+		success = maestro.maestroSetTarget(port, 0, target);
+		//if (!success) { return -1; }
+
+		/* Close the serial port so other programs can use it.
+		* Alternatively, you can just terminate the process (return from main). */
+		CloseHandle(port);
+
 	}
 }
 

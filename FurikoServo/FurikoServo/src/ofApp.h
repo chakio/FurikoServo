@@ -1,7 +1,7 @@
 #pragma once
 
 #include "ofMain.h"
-
+#include "MaestroSerial.h"
 class Furiko {
 public:
 	Furiko();
@@ -44,4 +44,5 @@ class ofApp : public ofBaseApp{
 		ofEasyCam cam;
 
 		bool start = false;
+		Maestro maestro;
 };

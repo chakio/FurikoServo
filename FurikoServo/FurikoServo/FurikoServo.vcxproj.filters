@@ -31,7 +31,7 @@
     <ClCompile Include="..\..\..\..\..\Documents\of_v0.9.8_vs\addons\ofxGui\src\ofxToggle.cpp">
       <Filter>addons\ofxGui\src</Filter>
     </ClCompile>
-    <ClCompile Include="MaestroSerial.cpp">
+    <ClCompile Include="src\MaestroSerial.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
@@ -80,7 +80,7 @@
     <ClInclude Include="..\..\..\..\..\Documents\of_v0.9.8_vs\addons\ofxGui\src\ofxToggle.h">
       <Filter>addons\ofxGui\src</Filter>
     </ClInclude>
-    <ClInclude Include="MaestroSerial.h">
+    <ClInclude Include="src\MaestroSerial.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>

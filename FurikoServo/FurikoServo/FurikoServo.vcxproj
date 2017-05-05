@@ -187,7 +187,7 @@ C:\Users\chucky\Documents\of_v0.9.8_vs\addons\ofxGui\src;%(AdditionalIncludeDire
     <ClCompile Include="..\..\..\..\..\Documents\of_v0.9.8_vs\addons\ofxGui\src\ofxSlider.cpp" />
     <ClCompile Include="..\..\..\..\..\Documents\of_v0.9.8_vs\addons\ofxGui\src\ofxSliderGroup.cpp" />
     <ClCompile Include="..\..\..\..\..\Documents\of_v0.9.8_vs\addons\ofxGui\src\ofxToggle.cpp" />
-    <ClCompile Include="MaestroSerial.cpp" />
+    <ClCompile Include="src\MaestroSerial.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\ofApp.cpp" />
   </ItemGroup>
@@ -201,7 +201,7 @@ C:\Users\chucky\Documents\of_v0.9.8_vs\addons\ofxGui\src;%(AdditionalIncludeDire
     <ClInclude Include="..\..\..\..\..\Documents\of_v0.9.8_vs\addons\ofxGui\src\ofxSlider.h" />
     <ClInclude Include="..\..\..\..\..\Documents\of_v0.9.8_vs\addons\ofxGui\src\ofxSliderGroup.h" />
     <ClInclude Include="..\..\..\..\..\Documents\of_v0.9.8_vs\addons\ofxGui\src\ofxToggle.h" />
-    <ClInclude Include="MaestroSerial.h" />
+    <ClInclude Include="src\MaestroSerial.h" />
     <ClInclude Include="src\ofApp.h" />
   </ItemGroup>
   <ItemGroup>
