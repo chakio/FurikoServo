@@ -8,7 +8,7 @@ void ofApp::setup() {
 	
 
 	ofBackground(0, 0, 0);
-	ofSetFrameRate(30);
+	ofSetFrameRate(40);
 	ofEnableSmoothing();
 	ofSetVerticalSync(true);
 	glEnable(GL_BLEND);
@@ -19,15 +19,21 @@ void ofApp::setup() {
 	for (int i = 0; i < 15; i++)
 	{
 		Furiko furiko;
-		furiko.setup(calLength(T[i],(double)10/180*M_PI), 10);
+		furiko.setup(calLength(T[i],(double)20/180*M_PI), 20);
 		Furikos.push_back(furiko);
 	}
 
-	//３次元の描画を簡単にすることを強く意識したライブラリです
-	//視点設定も簡単にできるようなクラスが用意されています
+	maestro.portName = "COM4";  // Each double slash in this source code represents one slash in the actual name.
+
+						/* Choose the baud rate (bits per second).
+						* If the Maestro's serial mode is USB Dual Port, this number does not matter. */
+	maestro.baudRate = 9600;
+
+	/* Open the Maestro's serial port. */
+	maestro.port = maestro.openPort(maestro.portName, maestro.baudRate);
+	//if (port == INVALID_HANDLE_VALUE) { return -1; }
+
 	
-	//draw()の中
-	//カメラ機能の開始
 }
 
 //--------------------------------------------------------------
@@ -42,43 +48,22 @@ void ofApp::update(){
 
 
 
-		HANDLE port;
-		char * portName;
-		int baudRate;
-		BOOL success;
-		unsigned short target, position;
+		
 
 		/* portName should be the name of the Maestro's Command Port (e.g. "COM4")
 		* as shown in your computer's Device Manager.
 		* Alternatively you can use \\.\USBSER000 to specify the first virtual COM
 		* port that uses the usbser.sys driver.  This will usually be the Maestro's
 		* command port. */
-		portName = "COM4";  // Each double slash in this source code represents one slash in the actual name.
+		
 
-							/* Choose the baud rate (bits per second).
-							* If the Maestro's serial mode is USB Dual Port, this number does not matter. */
-		baudRate = 9600;
-
-		/* Open the Maestro's serial port. */
-		port = maestro.openPort(portName, baudRate);
-		//if (port == INVALID_HANDLE_VALUE) { return -1; }
-
-		/* Get the current position of channel 0. */
-		success = maestro.maestroGetPosition(port, 0, &position);
-		//if (!success) { return -1; }
-		//printf("Current position is %d.\n", position);
-
-		/* Choose a new target based on the current position. */
-		target = (position < 6000) ? 7000 : 5000;
-		//printf("Setting target to %d (%d us).\n", target, target / 4);
-
-		/* Set the target of channel 0. */
-		success = maestro.maestroSetTarget(port, 0, target);
+		//maestro.success = maestro.maestroGetPosition(maestro.port, 0, &maestro.position);
+		
+		//cout << ("Current position is %d.\n", maestro.position) << endl;;
+		maestro.success = maestro.maestroSetTarget(maestro.port, 0, 6000);//180:10000,90:6000,0:2000
 		//if (!success) { return -1; }
 
-		/* Close the serial port so other programs can use it.
-		* Alternatively, you can just terminate the process (return from main). */
-		CloseHandle(port);
+		
 
 	}
 }
@@ -238,6 +223,15 @@ void ofApp::gotMessage(ofMessage msg){
 void ofApp::dragEvent(ofDragInfo dragInfo){ 
 
 }
+
+void ofApp::exit() {
+	// ここでファイルを保存!!
+	/* Close the serial port so other programs can use it.
+	* Alternatively, you can just terminate the process (return from main). */
+	CloseHandle(maestro.port);
+
+}
+
 
 Furiko::Furiko() {
 

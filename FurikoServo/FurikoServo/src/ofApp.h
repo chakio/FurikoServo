@@ -37,6 +37,7 @@ class ofApp : public ofBaseApp{
 		void windowResized(int w, int h);
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
+		void exit();
 		ofColor calcolor(double digree,double max);
 		double calLength(double time, double theta);
 		double M_PI = 3.14159265359;
