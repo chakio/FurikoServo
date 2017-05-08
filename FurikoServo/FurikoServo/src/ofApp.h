@@ -8,6 +8,7 @@ public:
 	double a=0;//加速度
 	double v=0;//角速度
 	double Theta;//角度
+	double Digree;//角度(度)
 	double Theta0;//初期角度
 	double Length;//長さ
 	double g = 9.8;//重力角速度
@@ -46,4 +47,5 @@ class ofApp : public ofBaseApp{
 
 		bool start = false;
 		Maestro maestro;
+		void servocontrol(int ch, double digree);
 };

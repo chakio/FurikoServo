@@ -8,7 +8,7 @@ void ofApp::setup() {
 	
 
 	ofBackground(0, 0, 0);
-	ofSetFrameRate(40);
+	ofSetFrameRate(25);
 	ofEnableSmoothing();
 	ofSetVerticalSync(true);
 	glEnable(GL_BLEND);
@@ -44,27 +44,10 @@ void ofApp::update(){
 		{
 			Furikos[i].caltheta(ofGetElapsedTimeMillis());
 		}
-
-
-
-
-		
-
-		/* portName should be the name of the Maestro's Command Port (e.g. "COM4")
-		* as shown in your computer's Device Manager.
-		* Alternatively you can use \\.\USBSER000 to specify the first virtual COM
-		* port that uses the usbser.sys driver.  This will usually be the Maestro's
-		* command port. */
-		
-
-		//maestro.success = maestro.maestroGetPosition(maestro.port, 0, &maestro.position);
-		
-		//cout << ("Current position is %d.\n", maestro.position) << endl;;
-		maestro.success = maestro.maestroSetTarget(maestro.port, 0, 6000);//180:10000,90:6000,0:2000
-		//if (!success) { return -1; }
-
-		
-
+	}
+	for (int i = 0; i < Furikos.size(); i++)
+	{
+		servocontrol(i, Furikos[i].Digree);
 	}
 }
 
@@ -224,6 +207,14 @@ void ofApp::dragEvent(ofDragInfo dragInfo){
 
 }
 
+void ofApp::servocontrol(int ch, double digree)//digree:-90~90
+{
+	unsigned short target;////90:10000,0:6000,-90:2000
+	target = unsigned short(6000 + (double)4000 / 90 * digree);
+	maestro.maestroSetTarget(maestro.port, ch, target);
+
+}
+
 void ofApp::exit() {
 	// ‚±‚±‚Åƒtƒ@ƒCƒ‹‚ð•Û‘¶!!
 	/* Close the serial port so other programs can use it.
@@ -240,6 +231,7 @@ Furiko::Furiko() {
 void Furiko::setup(double length, double theta0) {
 	Length = length;
 	Theta = theta0/180*M_PI;
+	Digree = theta0;
 }
 
 void Furiko::caltheta(int time)
@@ -249,5 +241,6 @@ void Furiko::caltheta(int time)
 	a = -g / Length*sin(Theta);
 	v = v + a*Dtime;
 	Theta = Theta + v*Dtime;
+	Digree = Theta / M_PI * 180;
 	beforetime = time;
 }
